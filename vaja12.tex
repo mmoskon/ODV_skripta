@@ -139,7 +139,7 @@ Kontrolna enota ima torej dve stanji, tj. stanje \emph{IF}, ki je aktivno, ko je
 
 Realizacijo avtomata kontrolne enote v Logisimu prikazuje slika \ref{fig:CU_logisim}.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/CU}%
 \caption{Realizacija kontrolne enote v Logisimu s T-pomnilno celico, pri čemer moduli $LDA$, $LDB$, $STA$, $ADD$ in $SUB$ predstavljajo kombinatorno logiko za določitev posameznega kontrolnega signala, $Instruction$ pa ukaz, zapisan v ukaznem registru. Simbol, ki se v shemi nahaja pred komponento $Instruction$, predstavlja komponento, ki več enobitnih signalov združi v večbitni vektor.}%
@@ -152,7 +152,7 @@ Realizacijo avtomata kontrolne enote v Logisimu prikazuje slika \ref{fig:CU_logi
 \subsection{Aritmetično logična enota}
 Aritmetično logična enota \angl{Arithmetic Logic Unit, ALU} izvaja aritmetično logične operacije nad splošno namenskimi registri kot so seštevanje, množenje, deljenje, logični pomik itd. V našem primeru ALU podpira samo dve artimetični operaciji, in sicer seštevanje in odštevanje vsebine registrov A in B. Operacija, ki se bo izvedla, je določena s kontrolnim signalom, katerega vrednost na podlagi dekodiranega signala določi kontrolna enota. Realizacija ALU v Logisimu je prikazana na sliki \ref{fig:ALU}, pri čemer sta vhoda $A$ in $B$ izhoda iz splošno namenskih registrov, vhod $SUB$ pa izhod iz kontrolne enote, ki ima vrednost 1, če je trenutni ukaz odštevanje. Izhod iz aritmetično logične enote določa rezultat izvedene operacije.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/ALU}%
 \caption{Realizacija aritmetično logične enote v Logisimu, pri čemer $ADD2$ predstavlja modul za izračun vsote 2-bitnih vhodov, $C2$ pa modul za izračun dvojiškega komplementa 2-bitnega vhoda (glej razdelek \ref{sec:odstevalnik}). Naslovni vhod v multiplekser ($SUB$) določi ali se bo izračunala vsota števil $A$ in $B$ ali vsota števila $A$ in dvojiškega komplementa števila $B$.}%
@@ -174,7 +174,7 @@ To so multiplekserji in ostala kombinatorna logična vrata.
 \section{Nabor ukazov}
 Procesor podpira izvedbo 5 različnih ukazov (glej Tabelo \ref{tab:ukazi}). Posamezen ukaz je določen s 4-bitno kodo, ki je shranjena v ukaznem pomnilniku oziroma ukaznem registru. Pri nekaterih ukazih se del te kode uporabi kot naslov za podatkovni pomnilnik. 
 
-\begin{table}[htbf]
+\begin{table}
 \begin{tabular}{cccc|c|c}
  $IR(3)$ & $IR(2)$ & $IR(1)$ & $IR(0)$ & ukaz & pomen \\
  \hline
@@ -221,7 +221,7 @@ Register je sinhroni pomnilni element, kar pomeni da omogoča pomnjenje (v $n$-b
 \end{itemize}
 Vsebina registra je na izhodu \emph{Data\_out}. Realizacija 4-bitnega registra v Logisimu je prikazana na sliki \ref{fig:reg_4bit}.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/reg_4bit}%
 \caption{Realizacija 4-bitnega registra v Logisimu z D-pomnilnimi celicami. Če so naslovni vhodi v multiplekserje aktivni (z drugimi besedami, če je $WE=1$), se stanje registra v naslednji urini periodi zamenja z vhodnim signalom \emph{data\_in}. V nasprotnem primeru se stanje registra ohranja.}%
@@ -237,7 +237,7 @@ Programski števec je v našem primeru posebna oblika registra s sledečima vhod
 \end{itemize}
 Vsebino registra lahko beremo preko izhoda \emph{Address}, ki služi kot naslov za branje ukaza iz ukaznega pomnilnika. Realizacija programskega števca v Logisimu je prikazana na sliki \ref{fig:pc}.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/PC}%
 \caption{Realizacija 2-bitnega programskega števca v Logisimu. Del kombinatorne logike ($XOR$ vrata in negator) predstavlja realizacijo povečanja vsebine programskega števca za 1. Če sta naslovna vhoda v multiplekserja ($inc$) aktivna, se stanje števca v naslednji urini periodi poveča. Če nista aktivna, se stanje ohranja.}%
@@ -248,7 +248,7 @@ Vsebino registra lahko beremo preko izhoda \emph{Address}, ki služi kot naslov 
 \subsection{Seštevalnik}
 Seštevalnik omogoča seštevanje dveh števil in je del aritmetično logične enote. V našem primeru imamo seštevalnik, ki sešteje dve 2-bitni števili. 2-bitni seštevalnik realiziramo z vezavo dveh 1-bitnih polnih seštevalnikov. Realizacija 1-bitnega polnega seštevalnika v Logisimu je prikazana na sliki \ref{fig:add_1bit}. Rezultat seštevanja dveh 1-bitnih števil $a$ in $b$ in prenosa \emph{carry\_in} gre na izhod $sum$. Izhod \emph{carry\_out} predstavlja prenos pri seštevanju.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/add_1bit}%
 \caption{Realizacija 1-bitnega polnega seštevalnika v Logisimu.}%
@@ -258,7 +258,7 @@ Seštevalnik omogoča seštevanje dveh števil in je del aritmetično logične e
 
 2-bitni seštevalnik lahko realiziramo z vezavo dveh 1-bitnih polnih seštevalnikov kot prikazuje slika \ref{fig:add_2bit}. Prenos pri seštevanju prvega seštevalnik (\emph{carry\_out}) uporabimo kot \emph{carry\_in} vhod v drugi seštevalnik.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/add_2bit}%
 \caption{Realizacija 2-bitnega seštevalnika v Logisimu. Modula $ADD1$ predstavljata 1-bitna polna seštevalnika.}%
@@ -273,7 +273,7 @@ $$
 - b = \ol{b} + 1
 $$
 Vezje za izračun dvojiškega komplementa prikazuje slika \ref{fig:complement}.
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/complement}%
 \caption{Realizacija vezja za izračun dvojiškega komplementa v Logisimu. Modul $ADD2$ predstavlja 2-bitni seštevalnik. Dvojiški komplement izračunamo tako, da negirani vrednosti vhodnega signala $b$ prištejemo 1.}%
@@ -306,7 +306,7 @@ Z ustrezno vezavo opisanih komponent lahko v Logisimu realiziramo preprost proce
 
 Realizacijo opisanega procesorja v Logisimu prikazuje slika \ref{fig:procesor}.
 
-\begin{figure}[htbf]%
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.75\columnwidth]{procesor/img/procesor}%
 \caption{Realizacija preprostega procesorja v Logisimu.}%
