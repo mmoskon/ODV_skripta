@@ -1,0 +1,258 @@
+\chapter{Priprava na 2. laboratorijske vaje}
+
+\section{Zapis preklopnih funkcij}
+
+%Za $n$ vhodnih spremenljivk obstaja $2^{2^n}$ preklopnih funkcij. Preklopno funkcijo lahko podamo na štiri načine:
+%\begin{enumerate}
+%\item tabelarični zapis (pravilnostna tabela),
+%\item analitični zapis (z logičnim izrazom),
+%\item matrični zapis (Veitchevi diagrami),
+%\item logična shema (grafično).
+%\end{enumerate}
+
+Analitični zapis podajamo z logičnim izrazom oziroma logično enačbo. Pogosto se uporabljajo tri posebne oblike analitičnega zapisa, in sicer normalna, popolna in minimalna. Preklopna funkcija je podana v normalni obliki, če je sestavljena iz največ dveh nivojev logičnih operatorjev. Oblika je popolna, če na prvem nivoju logičnih operatorjev v vseh izrazih nastopajo vse vhodne spremenljivke. Minimalna oblika je najkrajša možna oblika zapisa preklopne funkcije.
+
+\section{Analitični zapis in popolne normalne oblike zapisa preklopnih funkcij}
+
+Pogledali si bomo popolno disjunktivno normalno obliko (PDNO) in popolno konjunktivno normalno obliko (PKNO) zapisa preklopne funkcije.
+
+\subsection{Popolna disjunktivna normalna oblika (PDNO)}
+\begin{itemize}
+\item Disjunktivna: operator 2. nivoja je disjunkcija ($\vee$).
+\item $f(x_1,x_2,...,x_n)=\vee_{i=0}^{2^{n}-1}m_i f(\vec{w}_i)$
+\item $f(\vec{w}_i)$ ... vrednost funkcije pri $i$-tem vhodnem vektorju (vrstici)
+\item minterm je konjunktiven izraz - vse vhodne spremenljivke so povezane preko konjunkcije
+\item $m_i$ ... minterm $i$; $m_i = x_1^{w_{1,i}} \cdot x_2^{w_{2,i}} \cdot ... \cdot x_n^{w_{n,i}}; i=0,1,2,...,2^n-1$
+\item $x^w = \left\{\begin{array}{clcr}
+ x, w=1 \\ \ol x, w=0 \end{array} \right.$
+\item $w_{j,i}$...$j$-ti bit binarnega zapisa števila $i$
+\item PDNO lahko zapišemo v krajši obliki kot $f(x_1,x_2,...,x_n)=\vee^n(i_1,i_2,...,i_k)$, kjer $i_1,i_2,...,i_k$ določajo indekse mintermov, ki nastopajo v PDNO.
+\end{itemize}
+
+Recept: pri določanju PDNO disjunktivno vežemo tiste minterme, pri katerih je funkcijska vrednost 1. Pri tem se $i$-ti minterm nanaša na funkcijsko vrednost $f(\vec{w}_i)$ (glej tabelo \ref{tab:mintermi}).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc|c|c}
+$x_1$ & $x_2$ & $x_3$ & f($x_1$,$x_2$,$x_3$) & minterm\\
+\hline
+0 & 0 & 0 & $f(\vec{w}_0)$ & $m_0$ \\
+0 & 0 & 1 & $f(\vec{w}_1)$ & $m_1$ \\
+0 & 1 & 0 & $f(\vec{w}_2)$ & $m_2$ \\
+0 & 1 & 1 & $f(\vec{w}_3)$ & $m_3$ \\
+1 & 0 & 0 & $f(\vec{w}_4)$ & $m_4$ \\
+1 & 0 & 1 & $f(\vec{w}_5)$ & $m_5$ \\
+1 & 1 & 0 & $f(\vec{w}_6)$ & $m_6$ \\
+1 & 1 & 1 & $f(\vec{w}_7)$ & $m_7$ 
+\end{tabular}
+\caption{Primer pravilnostne tabele in zaporedja mintermov za preklopno funkcijo treh vhodnih spremenljivk.}
+\label{tab:mintermi}
+\end{table}
+
+\begin{zgled}
+Zapiši minterm 9, pri 4-ih vhodnih spremenljivkah:
+\end{zgled}
+
+\begin{resitev}
+Velja torej:
+\begin{itemize}
+\item $n=4$,
+\item $i = 9_{[10]} = 1001_{[2]}$,
+\item $m_9 = x_1^1 x_2^0 x_3^0 x_4^1 = x_1 \ol x_2 \ol x_3 x_4$.
+\end{itemize}
+\end{resitev}
+
+\subsection{Popolna konjunktivna normalna oblika (PKNO)}
+\begin{itemize}
+\item Konjunktivna: operator 2. nivoja je konjunkcija ($\&$).
+\item $f(x_1,x_2,...,x_n)=\&_{i=0}^{2^{n}-1}\left( M_{2^{n}-1-i} \vee f(\vec{w}_i)\right)$
+\item maksterm je disjunktiven izraz - vhodne spremenljivke so povezane preko disjunkcije
+\item $M_{2^{n}-1-i}$ ... maksterm $2^{n}-1-i$; $M_{2^{n}-1-i} = x_1^{\ol w_{1,i}} \vee x_2^{\ol w_{2,i}} \vee ... \vee x_n^{\ol w_{n,i}}; i=0,1,2,...,2^n-1$
+\item PKNO lahko zapišemo v krajši obliki: $f(x_1,x_2,...,x_n)=\&^n(i_m,i_{m-1},...,i_1)$, kjer $i_m,i_{m-1},...,i_1$ določajo indekse makstermov, ki nastopajo v PKNO.
+\end{itemize}
+
+Recept: pri določanju PKNO konjunktivno vežemo tiste maksterme, pri katerih je funkcijska vrednost 0. Pri tem se $(2^n-1-i)$-ti maksterm nanaša na funkcijsko vrednost $f(\vec{w}_i)$ (glej tabelo \ref{tab:makstermi}).
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc|c|c}
+$x_1$ & $x_2$ & $x_3$ & f($x_1$,$x_2$,$x_3$) & maksterm\\
+\hline
+0 & 0 & 0 & $f(\vec{w}_0)$ & $M_7$ \\
+0 & 0 & 1 & $f(\vec{w}_1)$ & $M_6$ \\
+0 & 1 & 0 & $f(\vec{w}_2)$ & $M_5$ \\
+0 & 1 & 1 & $f(\vec{w}_3)$ & $M_4$ \\
+1 & 0 & 0 & $f(\vec{w}_4)$ & $M_3$ \\
+1 & 0 & 1 & $f(\vec{w}_5)$ & $M_2$ \\
+1 & 1 & 0 & $f(\vec{w}_6)$ & $M_1$ \\
+1 & 1 & 1 & $f(\vec{w}_7)$ & $M_0$ \\
+\end{tabular}
+\caption{Primer pravilnostne tabele in zaporedja makstermov za preklopno funkcijo treh vhodnih spremenljivk.}
+\label{tab:makstermi}
+\end{table}
+
+\begin{zgled}
+Zapiši maksterm 9 pri 4-ih vhodnih spremenljivkah.
+\end{zgled}
+\begin{resitev}
+Velja torej:
+\begin{itemize}
+\item $n=4$,
+\item $2^n-1-i=15-9=6$,
+\item $2^n-1-i=6_{[10]} = 0110_{[2]}$,
+\item $M_9 = x_1^{\ol 0} \vee x_2^{\ol 1} \vee x_3^{\ol 1} \vee x_4^{\ol 0} = x_1 \vee \ol x_2 \vee \ol x_3 \vee x_4$.
+\end{itemize}
+\end{resitev}
+
+\begin{zgled}
+Podano funkcijo pretvori v popolno disjunktivno normalno obliko na dva načina:
+\begin{itemize}
+\item{s pomočjo pravilnostne tabele},
+\item{analitično z razširitvijo}.
+\end{itemize}
+\end{zgled}
+\begin{resitev}
+Funkcija:
+$$
+f(x_1,x_2,x_3) = x_1 \vee x_1 \ol x_2 \vee \ol x_2 \ol x_3
+$$
+je že zapisana v \textit{disjunktivni normalni obliki}, ki pa ni popolna. 
+
+\bigskip
+
+\textbf{Pretvorba s pomočjo pravilnostne tabele}
+
+Zapišimo pravilnostno tabelo, s pomočjo katere lahko zapišemo PDNO, tako da prepišemo tiste minterme, pri katerih je vrednost funkcije enaka 1.\\
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc|c|c|c}
+$x_1$ & $x_2$ & $x_3$ & f($x_1$,$x_2$,$x_3$) & minterm & maksterm\\
+\hline
+0 & 0 & 0 & 1 & $m_0$ & $M_7$ \\
+0 & 0 & 1 & 0 & $m_1$ & $M_6$ \\
+0 & 1 & 0 & 0 & $m_2$ & $M_5$ \\
+0 & 1 & 1 & 0 & $m_3$ & $M_4$ \\
+1 & 0 & 0 & 1 & $m_4$ & $M_3$ \\
+1 & 0 & 1 & 1 & $m_5$ & $M_2$ \\
+1 & 1 & 0 & 1 & $m_6$ & $M_1$ \\
+1 & 1 & 1 & 1 & $m_7$ & $M_0$ \\
+\end{tabular}
+\caption{Pravilnostna tabela funkcije $f(x_1,x_2,x_3) = x_1 \vee x_1 \ol x_2 \vee \ol x_2 \ol x_3$.}
+\end{table}
+
+
+Če izpišemo samo indekse teh mintermov, dobimo skrajšano obliko PDNO:\\
+\hspace*{5mm} $f(x_1,x_2,x_3)=\vee^3(0,4,5,6,7)$. \\
+
+\bigskip
+Zapišimo PDNO še v eksplicitni obliki: \\
+\hspace*{5mm} $f(x_1,x_2,x_3)=\ol x_1 \ol x_2 \ol x_3 \vee x_1 \ol x_2 \ol x_3 \vee x_1 \ol x_2 x_3 \vee x_1 x_2 \ol x_3 \vee x_1 x_2 x_3$. \\
+
+\textbf{Analitična pretvorba z razširitvijo}
+
+Funkcijo razširimo v popolno (na prvem nivoju morajo nastopati vse vhodne spremenljivke):
+\begin{align*}
+&x_1 \vee x_1 \ol x_2 \vee \ol x_2 \ol x_3 \\
+= & x_1(x_2 \vee \ol x_2)(x_3 \vee \ol x_3) \vee x_1 \ol x_2 (x_3 \vee \ol x_3) \vee (x_1 \vee \ol x_1)\ol x_2 \ol x_3 \\
+= & x_1 x_2 x_3 \vee x_1 x_2 \ol x_3 \vee x_1 \ol x_2 x_3 \vee x_1 \ol x_2 \ol x_3 \vee \hsout{x_1 \ol x_2 x_3} \vee \hsout{x_1 \ol x_2 \ol x_3} \vee \hsout{x_1 \ol x_2 \ol x_3} \vee \ol x_1 \ol x_2 \ol x_3\\
+= & x_1 x_2 x_3 \vee x_1 x_2 \ol x_3 \vee x_1 \ol x_2 x_3 \vee x_1 \ol x_2 \ol x_3 \vee \ol x_1 \ol x_2 \ol x_3 \\
+= & \vee^3(7,6,5,4,0) \\
+= & \vee^3(0,4,5,6,7) \\
+\end{align*}
+
+\end{resitev}
+
+\subsection{Relaciji med makstermi in mintermi}
+Med mintermi in makstermi zaradi DeMorganovega pravila veljata sledeči relaciji: 
+\begin{itemize}
+\item $\ol m_i = M_{2^n-1-i},$ 
+\item $\ol M_i = m_{2^n-1-i}.$
+\end{itemize}
+
+Relaciji lahko uporabimo pri pretvarjanju funkcije iz PDNO v PKNO in obratno. Pri podanem zapisu najprej pogledamo kateri termi manjkajo:
+\begin{itemize}
+\item Če je funkcija podana v PDNO, izpišemo manjkajoče minterme - v pravilnostni tabeli so soležni z enicami.
+\item Če je funkcija podana v PKNO, izpišemo manjkajoče maksterme - v pravilnostni tabeli so soležni z ničlami.
+\end{itemize}
+S tem smo dobili pozicije termov, ki nastopajo v iskani obliki zapisa preklopne funkcije. Indekse iskanih termov dobimo tako, da nad izpisanimi mintermi oziroma makstermi uporabimo zgoraj navedeni relaciji.
+
+\subsection{Pretvarjanje med PDNO in PKNO}
+Dva možna načina reševanja:
+\begin{enumerate}
+\item zapišemo pravilnostno tabelo in iz nje razberemo rešitev,
+\item z upoštevanjem relacij med mintermi in makstermi.
+\end{enumerate}
+
+\begin{zgled}
+Funkcijo podano v PDNO pretvori v PKNO:
+\begin{itemize}
+\item s pomočjo pravilnostne tabele,
+\item z upoštevanjem relacij med mintermi in makstermi.
+\end{itemize}
+\end{zgled}
+\begin{resitev}
+Demonstrirajmo oba načina pretvorbe.
+
+\textbf{Pretvorba iz PDNO v PKNO: s pomočjo pravilnostne tabele} \\
+Glej tabelo v prejšnjem zgledu!
+
+Prepišemo maksterme, pri katerih je vrednost funkcije enaka 0.
+
+\hspace*{5mm} PKNO: $\&^3(6,5,4)$
+
+Eksplicitna PKNO: \\
+\hspace*{5mm} PKNO: $(x_1 \vee x_2 \vee \ol x_3) (x_1 \vee \ol x_2 \vee x_3) (x_1 \vee \ol x_2 \vee \ol x_3)$.\\
+
+\textbf{Pretvorba iz PDNO v PKNO: z upoštevanjem relacij med mintermi in makstermi}
+
+Pretvorimo $\vee^3(0,4,5,6,7)$ v PKNO:
+\begin{enumerate}
+\item zapišemo manjkajoče minterme: $m_1,m_2,m_3$.
+\item izračunamo indekse makstermov: $M_6, M_5, M_4$.
+\item rešitev: $\&^3(6,5,4)$.
+\end{enumerate}
+
+Na podoben način, bi lahko pretvarjali tudi iz PKNO v PDNO.
+
+\end{resitev}
+
+
+%\section*{Laboratorijske vaje}
+%S programom \textit{Logisim} realiziraj preklopno funkcijo
+%$$
+%f(x_1,x_2,x_3) = \&^3(6,4,1,0)
+%$$
+%in s simulacijo preveri pravilnost sheme.
+%
+%\bigskip
+%Eksplicitna 
+%Minimalna oblika: $f(x_1,x_2,x_3) = \ol x_1 \ol x_3 \vee x_1 \ol x_2$.\\
+%Pravilnostna tabela: \\
+%\begin{table}[ht]
+%\centering
+%\begin{tabular}{ccc|c}
+%$x_1$ & $x_2$ & $x_3$ & f($x_1$,$x_2$,$x_3$) \\
+%\hline
+%0 & 0 & 0 & 1 \\
+%0 & 0 & 1 & 0 \\
+%0 & 1 & 0 & 1 \\
+%0 & 1 & 1 & 0 \\
+%1 & 0 & 0 & 1 \\
+%1 & 0 & 1 & 1 \\
+%1 & 1 & 0 & 0 \\
+%1 & 1 & 1 & 0 \\
+%\end{tabular}
+%\end{table}
+%
+%Shema:\\
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=0.5\linewidth]{slika_v2_2.eps}
+%\end{figure}
+%\end{itemize}
+
+%\subsection*{Popolna konjunktivna normalna oblika (PKNO)}
+%\begin{itemize}
+%\item Konjunktivna: operator 2. nivoja je konjunkcija($ \&$).
+%\item $f(x_1,x_2,...,x_n)=\&_0^{2^{n}-1} \left( M_{2^{n}-1-i} \vee f(\vec{w}_i) \right)$

@@ -1,0 +1,70 @@
+\chapter{Priprava na 3. laboratorijske vaje}
+
+\section{Zapis preklopnih funkcij z Veitchevim diagramom}
+
+Veitchevi diagrami igrajo pomembno vlogo pri minimizaciji preklopnih funkcij. Veitchev diagram pri $n$ vhodnih spremenljivkah je sestavljen iz $2^n$ polj, pri čemer posamezno polje vsebuje funkcijsko vrednost pri posameznem mintermu. Postopek zapisovanja Veitchevega diagrama je razmeroma preprost, in sicer izhajamo iz diagrama za eno spremenljivko (glej sliko \ref{fig:Veitch}(a)). Diagram za dve spremenljivki dobimo tako, da podvojimo diagram za eno spremenljivko. Označiti je potrebno tudi pokritja, in sicer tako, da posamezna spremenljivka pokriva polovico Veitchevega diagrama. Pokritja lahko izbiramo na različne načine. V splošnem dobimo diagram za $n$ spremenljivk tako, da podvojimo diagram za $n-1$ spremenljivk in na novo dodani del pokrijemo z dodano spremenljivko.
+
+\begin{figure}[ht]
+\begin{center}
+	\begin{tabular}{ccc}
+		\includegraphics{veitch-1.eps} & \includegraphics{veitch-2.eps} & \includegraphics{veitch-3.eps}\\
+		(a) & (b) & (c)\\
+	\end{tabular}		
+	\begin{tabular}{cc}
+		\includegraphics{veitch-4.eps} & \includegraphics{veitch-5.eps}\\
+		(d) & (e)\\
+	\end{tabular}	
+	
+\end{center}
+\caption{Slika (a) prikazuje Veitchev diagram za eno vhodno spremenljivko, slika (b) za dve, slika (c) za tri, slika (d) za štiri, slika (e) pa za pet.}
+\label{fig:Veitch}
+\end{figure}
+
+\begin{zgled}
+Funkcijo $f(x_1,x_2,x_3,x_4) = \vee^4(5, 7, 9, 11, 13, 15)$ zapiši v Veitchev diagram. 
+\end{zgled}
+\begin{resitev}
+V polja, ki se nanašajo na minterme, pri katerih je funkcijska vrednost enaka 1, vpišemo enice, ostala polja pa pustimo prazna (glej sliko \ref{fig:Veitch-zgled}).
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics{veitch-zgled.eps} 
+\end{center}
+\caption{Veitchev diagram funkcije $f(x_1,x_2,x_3,x_4) = \vee^4(5, 7, 9, 11, 13, 15)$.}
+\label{fig:Veitch-zgled}
+\end{figure}
+
+\end{resitev}
+
+\section{Funkcijsko poln sistem}
+
+Funkcijsko poln sistem je nabor logičnih funkcij, s katerimi lahko izrazimo katerokoli logično funkcijo. Iz definicije Boolove algebre sledi, da je $\{\vee,\cdot,\neg\}$ funkcijsko poln sistem (operator $\neg\ $ predstavlja negacijo).
+
+Funkcijsko polnost ugotavljamo na dva načina:
+\begin{itemize}
+\item s pretvorbo na nek znan funkcijsko poln sistem,
+\item s preverjanjem pripadnosti osnovnim zaprtim razredom.
+\end{itemize}
+
+\begin{zgled}
+S pretvorbo na negacijo, konjunkcijo in disjunkcijo pokaži, da je Shefferjev operator funkcijsko poln sistem.
+\end{zgled}
+\begin{resitev}
+
+S Shefferjevim operatorjem izrazimo negacijo.
+
+\begin{align*}
+\ol x & = \ol x \ol x  = x \uparrow x\\
+\end{align*}
+S Shefferjevim operatorjem izrazimo konjunkcijo.
+\begin{align*}
+x_1 x_2 & = \ol{\ol{x_1 x_2}} = \ol{x_1 \uparrow x_2} = (x_1 \uparrow x_2) \uparrow (x_1 \uparrow x_2) \\
+\end{align*}
+S Shefferjevim operatorjem izrazimo disjunkcijo.
+\begin{align*}
+x_1 \vee x_2 & = \ol{\ol{x_1 \vee x_2}} = \ol{\ol x_1 \ol x_2} = (x_1 \uparrow x_1) \uparrow (x_2 \uparrow x_2)
+\end{align*}
+\end{resitev}
+Podobno bi se dalo pokazati za Peircov operator.
+
+

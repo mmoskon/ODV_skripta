@@ -1,0 +1,306 @@
+\chapter{Priprava na 8. laboratorijske vaje}
+\section{Sekvenčna vezja}
+Do zdaj smo obravnavali \emph{kombinatorna vezja}, ki ne omogočajo pomnjenja. Pomnjenje je (običajno) realizirano z uporabo sinhronih pomnilnih celic (z uporabo $n$ pomnilnih celic lahko realiziramo pomnjenje $2^n$ različnih vrednosti). Izhod sinhronih pomnilnih celic se spreminja ob določeni (pozitivni ali negativni) fronti \emph{urinega signala} (angl. \emph{clock}) -- sinhronizacija z urinim signalom (glej sliko \ref{fig:urin_signal}). \emph{Sekvenčna vezja} so vezja, ki so sestavljena iz kombinatornega dela in pomnilnih celic (glej sliko \ref{fig:sekvencna}). 
+
+
+\bigskip
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.5\linewidth]{urin.eps}
+\caption{Časovni potek vzorčnega primera urinega signala. Puščica navzgor označuje pozitivno (prehod iz 0 v 1), puščica navzdol pa negativno fronto (prehod iz 1 v 0). Slika prikazuje tri periode urinega signala.}
+\label{fig:urin_signal}
+\end{figure}
+
+\bigskip
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.3\linewidth]{sekvencna.eps}
+\caption{Struktura sekvenčnih vezij.}
+\label{fig:sekvencna}
+\end{figure}
+
+
+\section{Splošna pomnilna enačba}
+Vsako sekvenčno vezje lahko zapišemo s splošno pomnilno enačbo:
+
+$$
+D^1q_i = q_i g_{i,1} \vee \ol q_i g_{i,2},
+$$
+
+pri čemer je
+\begin{itemize}
+\item $q_i$: ena izmed preklopnih spremenljivk, ki opisuje notranje stanje sekvenčnega vezja
+\item $D^k q_i$: vrednost spremenljivke $q_i$ po $k$ časovnih korakih
+\item $g_{i,1}$ in $g_{i,2}$: preklopni funkciji, odvisni od vhodnih spremenljivk $\textbf{x}=\{ x_1, x_2, ... , x_n\}$.
+\end{itemize}
+
+Novo notranje stanje sekvenčnega vezja je torej določeno s trenutnim notranjim stanjem vezja in s stanjem zunanjih vhodov. Notranje stanje se spremeni ob pozitivni ali negativni fronti urinega signala. Izbrana fronta je za celotno vezje vedno enaka, s čimer sekvenčne komponente v vezju med seboj sinhroniziramo.
+
+\section{Enostavne pomnilne celice}
+\subsection{RS pomnilna celica (\emph{Reset Set})}
+
+RS pomnilna celica je najenostavnejša celica, katere delovanje lahko opišemo z enačbo
+
+$$
+D^1q = q \ol r \vee s,
+$$
+pri čemer $r$ in $s$ predstavljata zunanja vhoda v celico. Kot nakažejo že imena vhodov, vhod $r$ (\emph{reset}) izhod pomnilne celice postavi na 0, vhod $s$ ($set$) pa na 1. Če sta oba vhoda enaka 0, se izhod pomnilne celice ohranja (pomni). Za pravilno delovanje celice mora veljati pogoj $rs=0$ (vhoda ne smeta biti istočasno 1). Delovanje RS pomnilne celice lahko ponazorimo s Tabelo \ref{tab:RS}.
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+	\begin{tabular}{cc|c}
+		$r$ & $s$ & $D^1 q$\\
+		\hline
+		0 & 0 & $q$\\
+		0 & 1 & 1\\
+		1 & 0 & 0\\
+		1 & 1 & x
+	\end{tabular} \hspace{1cm}
+	&
+	\begin{tabular}{cc|cc}
+		$q$& $D^1 q$ & $r$ & $s$\\
+		\hline
+		0 & 0 & ? & 0\\
+		0 & 1 & 0 & 1\\
+		1 & 0 & 1 & 0\\
+		1 & 1 & 0 & ?
+	\end{tabular}
+	\bigskip
+	\\
+	(a) & (b)
+\end{tabular}
+\caption{Tabela (a) prikazuje izhod RS pomnilne celice v naslednjem časovnem koraku v odvisnosti od trenutnih vhodov, (b) pa stanja vhodov, s katerimi pridemo do želenega izhoda v naslednjem časovnem koraku (vzbujevalna tabela). Pri tem x prikazuje nedefiniran izhod oziroma nedovoljeno kombinacijo vhodov.}
+\label{tab:RS}
+\end{center}
+\end{table}
+
+Logična simbola RS pomnilne celice sta prikazana na sliki \ref{fig:RS_shema}. 
+
+\begin{figure}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics{RS_pos.eps} &
+\includegraphics{RS_neg.eps} \bigskip \\
+(a) & (b)
+\end{tabular}
+\caption{Logična simbola RS pomnilne celice, pri čemer je celica na sliki (a) sinhronizirana s pozitivno fronto urinega signala, celica na sliki (b) pa z negativno fronto.}
+\label{fig:RS_shema}
+\end{center}
+\end{figure}
+
+
+\subsection{JK pomnilna celica (\emph{Jump Kill})}
+JK pomnilna celica predstavlja razširitev RS pomnilne celice. Njeno delovanje lahko opišemo z enačbo
+$$
+D^1q = q\ol k \vee \ol q j,
+$$
+kjer sta $j$ in $k$ zunanja vhoda. Če je vsaj eden izmed vhodnih signalov $j$ in $k$ enak 0, je njeno delovanje enako delovanju RS pomnilne celice. Pri tem ima signal $j$ (\emph{jump}) enako vlogo kot signal $s$, signal $k$ (\emph{kill}) pa enako vlogo kot signal $r$ RS pomnilne celice. Pri JK pomnilni celici je kombinacija vhodov $jk=1$ dovoljena. Če postavimo oba vhoda na 1, se izhod pomnilne celice ($q$) ob urini fronti zamenja ($\ol q$). Delovanje JK pomnilne celice lahko ponazorimo s Tabelo \ref{tab:JK}.
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+	\begin{tabular}{cc|c}
+		$k$ & $j$ & $D^1 q$\\
+		\hline
+		0 & 0 & $q$\\
+		0 & 1 & 1\\
+		1 & 0 & 0\\
+		1 & 1 & $\ol q$
+	\end{tabular} \hspace{1cm}	&
+	\begin{tabular}{cc|cc}
+		$q$& $D^1 q$ & $k$ & $j$\\
+		\hline
+		0 & 0 & ? & 0\\
+		0 & 1 & ? & 1\\
+		1 & 0 & 1 & ?\\
+		1 & 1 & 0 & ?
+	\end{tabular}	\bigskip \\
+	(a) & (b)
+\end{tabular}
+\caption{Tabela (a) prikazuje izhod JK pomnilne celice v naslednjem časovnem koraku v odvisnosti od trenutnih vhodov, (b) pa stanja vhodov, s katerimi pridemo do želenega izhoda v naslednjem časovnem koraku (vzbujevalna tabela).}
+\label{tab:JK}
+\end{center}
+\end{table}
+
+Logična simbola JK pomnilne celice sta prikazana na sliki \ref{fig:JK_shema}. 
+
+\begin{figure}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics{JK_pos.eps} &
+\includegraphics{JK_neg.eps} \bigskip \\
+(a) & (b)
+\end{tabular}
+\caption{Logična simbola JK pomnilne celice, pri čemer je celica na sliki (a) sinhronizirana s pozitivno fronto urinega signala, celica na sliki (b) pa z negativno fronto.}
+\label{fig:JK_shema}
+\end{center}
+\end{figure}
+
+\subsection{T pomnilna celica (\emph{Trigger})}
+T pomnilna celica ob fronti urinega signala spreminja izhod v primeru, da je zunanji vhod $t$ postavljen na 1, sicer pa se vrednost izhoda ohranja. Njeno delovanje lahko opišemo z enačbo
+$$
+D^1q = q\ol t \vee \ol q t,
+$$ 
+kjer je $t$ zunanji vhod. Delovanje T pomnilne celice lahko ponazorimo s Tabelo \ref{tab:T}.
+
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+	\begin{tabular}{c|c}
+		$t$ & $D^1 q$\\
+		\hline
+		0 & $q$\\
+		1 & $\ol q$
+	\end{tabular} \hspace{1cm}	&
+	\begin{tabular}{cc|c}
+		$q$& $D^1 q$ & $t$\\
+		\hline
+		0 & 0 & 0\\
+		0 & 1 & 1\\
+		1 & 0 & 1\\
+		1 & 1 & 0\\
+	\end{tabular} \bigskip\\
+	(a)&(b)	
+\end{tabular}
+\caption{Tabela (a) prikazuje notranje izhod T pomnilne celice v naslednjem časovnem koraku v odvisnosti od vrednosti vhoda, (b) pa vrednost vhoda, s katero pridemo do želenega izhoda v naslednjem časovnem koraku (vzbujevalna tabela).}
+\label{tab:T}
+\end{center}
+\end{table}
+
+Logična simbola T pomnilne celice sta prikazana na sliki \ref{fig:T_shema}. 
+
+\begin{figure}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics{T_pos.eps} &
+\includegraphics{T_neg.eps} \bigskip \\
+(a) & (b)
+\end{tabular}
+\caption{Logična simbola T pomnilne celice, pri čemer je celica na sliki (a) sinhronizirana s pozitivno fronto urinega signala, celica na sliki (b) pa z negativno fronto.}
+\label{fig:T_shema}
+\end{center}
+\end{figure}
+
+\newpage
+
+\subsection{D pomnilna celica (Delay)}
+D pomnilna celica ob fronti urinega signala postavi svoj izhod na vrednost vhodnega signala. Njeno delovanje si lahko torej interpretiramo kot zakasnitev vhodnega signala $d$. Opišemo ga lahko z enačbo
+$$
+D^1q = d.
+$$
+Delovanje D pomnilne celice lahko ponazorimo s Tabelo \ref{tab:D}.
+
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+	\begin{tabular}{c|c}
+		$d$ & $D^1 q$\\
+		\hline
+		0 & 0\\
+		1 & 1
+	\end{tabular} \hspace{1cm} &
+	\begin{tabular}{cc|c}
+		$q$& $D^1 q$ & $d$\\
+		\hline
+		0 & 0 & 0\\
+		0 & 1 & 1\\
+		1 & 0 & 0\\
+		1 & 1 & 1\\
+	\end{tabular} \bigskip\\
+	(a)&(b)	
+\end{tabular}
+\caption{Tabela (a) prikazuje izhod D pomnilne celice v naslednjem časovnem koraku v odvisnosti od vrednosti vhoda, (b) pa vrednost vhoda, s katero pridemo do želenega izhoda v naslednjem časovnem koraku (vzbujevalna tabela).}
+\label{tab:D}
+\end{center}
+\end{table}
+
+Logična simbola D pomnilne celice sta prikazana na sliki \ref{fig:D_shema}. 
+
+\begin{figure}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics{D_pos.eps} &
+\includegraphics{D_neg.eps} \bigskip \\
+(a) & (b)
+\end{tabular}
+\caption{Logična simbola D pomnilne celice, pri čemer je celica na sliki (a) sinhronizirana s pozitivno fronto urinega signala, celica na sliki (b) pa z negativno fronto.}
+\label{fig:D_shema}
+\end{center}
+\end{figure}
+
+
+\section{Realizacija sekvenčnih vezij s pomnilnimi celicami}
+
+Podano imamo sekvenčno vezje in tip pomnilnih celic, ki jih lahko uporabimo za njegovo realizacijo. Naš cilj je določitev kombinatornega dela vezja, ki bo vhodne spremenljivke prilagodil delovanju danih pomnilnih celic na tak način, da bo izhod pomnilnih celic odražal delovanje podanega sekvenčnega vezja. Postopek realizacije bomo demonstirali na zgledu.
+
+\begin{zgled}
+S pomočjo JK pomnilne celice realiziraj M celico, ki deluje po enačbi $D^1 q = q(x \equiv y) \vee \ol q \; \ol y$.
+\end{zgled}
+\begin{resitev}
+Osnutek sheme realizacije prikazuje slika \ref{fig:celica_M}. Določiti je torej potrebno kombinatorni del vezja: $k(x,y,q)$  in $j(x,y,q)$.\\
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\linewidth]{sekvencna_M.eps}
+\caption{Shema realizacije celice M, pri čemer $k(x,y,q)$ določa kombinatorno vezje na vhodu $k$, $j(x,y,q)$ pa kombinatorno vezje na vhodu $j$ JK pomnilne celice.}
+\label{fig:celica_M}
+\end{figure}
+
+\bigskip
+
+V prvem koraku v tabeli zapišemo funkcijo, ki določa delovanje sekvenčnega vezja. Pri tem so neodvisne spremenljivke $x$, $y$ in $q$, odvisna spremenljivka pa je $D^1 q$:
+
+\begin{center}
+\begin{tabular}{ccc|c}
+$x$ & $y$ & $q$ & $D^1 q$ \\
+\hline
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 1 \\
+0 & 1 & 0 & 0 \\
+0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 1 & 0 \\
+1 & 1 & 0 & 0 \\
+1 & 1 & 1 & 1 
+\end{tabular}
+\end{center}
+
+
+Na podlagi prehodov iz $q$ v $D^1 q$ in na podlagi vzbujevalne tabele JK pomnilne celice (glej Tabelo \ref{tab:JK} (b)) lahko določimo vrednosti, ki morajo biti na vhodih $k$ in $j$ pri posamezni kombinaciji:
+
+\begin{center}
+\begin{tabular}{ccc|c|cc}
+$x$ & $y$ & $q$ & $D^1 q$ &$k$ & $j$\\
+\hline
+0 & 0 & 0 & 1 & ? & 1\\
+0 & 0 & 1 & 1 & 0 & ?\\
+0 & 1 & 0 & 0 & ? & 0\\
+0 & 1 & 1 & 0 & 1 & ?\\
+1 & 0 & 0 & 1 & ? & 1\\
+1 & 0 & 1 & 0 & 1 & ?\\
+1 & 1 & 0 & 0 & ? & 0\\
+1 & 1 & 1 & 1 & 0 & ?
+\end{tabular}
+\end{center}
+
+
+Funkciji $k(x,y,q)$  in $j(x,y,q)$ izrazimo z vhodnimi spremenljivkami $x$, $y$ in $q$. Pri tem si lahko pomagamo z Veitchevim diagramom:
+
+\begin{figure}[!ht]
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics{veitch_k.eps} &
+\includegraphics{veitch_j.eps} \\
+$k(x,y,q) = \ol x \; y \vee x \; \ol y$ & $j(x,y,q) = \ol y$\\
+\end{tabular}
+\end{center}
+\end{figure}
+
+\bigskip
+
+Funkciji realiziramo v shemi, ki jo prikazuje slika \ref{fig:celica_M}.
+\end{resitev}
+

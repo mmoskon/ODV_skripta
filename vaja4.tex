@@ -1,0 +1,216 @@
+\chapter{Priprava na 4. laboratorijske vaje}
+
+\section{Zaprti razredi in preverjanje funkcijske polnosti sistema}
+%Naj bo $P_n$ množica vseh preklopnih funkcij nad $n$ vhodnimi spremenljivkami in naj bo $M \subset P_n$ njena podmnožica. Naj bo $f \in M$ poljubna funkcija. Če z $f$ ne moremo izraziti nobene funkcije $g \notin M$, je $M$ zaprt razred.
+
+Funkcijo polnost nabora logičnih funkcij lahko preverjamo s pripadnostjo nabora osnovnim zaprtim razredom logičnih funkcij (Postov teorem). Osnovni zaprti razredi so sledeči:
+\begin{itemize}
+%\item $P_n$ -- univerzalna množica
+\item $T_0$ -- razred preklopnih funkcij, ki ohranjajo ničlo ($f(0,0,\ldots,0) = 0$)
+\item $T_1$ -- razred preklopnih funkcij, ki ohranjajo enico ($f(1,1,\ldots,1) = 1$)
+\item $S$ -- razred sebidualnih funkcij ($\ol f (\ol x_1,\ol x_2,\ldots,\ol x_n) = f(x_1,x_2,\ldots,x_n)$)
+\item $L$ -- razred linearnih funkcij ($f(x_1, x_2,...,x_n) \in L$, $f(x_1,x_2,...,x_n)$ $=$ \\= $a_0 \nabla a_1 x_2 \nabla ... \nabla a_n x_n$)
+\item $M$ -- razred monotonih funkcij ($f(x_1, x_2,...,x_n) \in M, \forall i,j: $ \\$\vec{w}_i < \vec{w}_j \rightarrow f(\vec{w}_i) \leq f(\vec{w}_j)$)
+\end{itemize}
+Če nabor odpira vse osnovne razrede, je poln. Nabor odpira nek osnovni razred, če vsaj ena izmed funkcij v podanem naboru ne pripada izbranemu razredu. 
+
+
+\begin{zgled}
+S pomočjo zaprtih razredov preveri funkcijsko polnost nabora $\{\vee,\rightarrow,1\}$.
+\end{zgled}
+\begin{resitev}
+Cilj: Pri vsakem osnovnem razredu želimo najti vsaj eno funkcijo iz podanega nabora, ki temu razredu ne pripada.
+
+\begin{enumerate}
+\item Razred $T_0$:
+\begin{itemize}
+\item $\vee: f(0,0) = 0 \vee 0 = 0$; pripada razredu.
+\item $1: 1 \neq 0$; ne pripada razredu.
+\end{itemize}
+
+\item Razred $T_1$:
+\begin{itemize}
+\item $\vee: f(1,1) = 1 \vee 1 = 1$; pripada razredu.
+\item $\rightarrow: f(1,1) = 1 \rightarrow 1 = 1$; pripada razredu.
+\item $1: 1 = 1$; pripada razredu
+\end{itemize}
+Nabor $\{\vee,\rightarrow,1\}$ ne odpira razreda $T_1$, torej nabor ni poln. Vseeno nadaljujmo s postopkom.
+
+\item Razred $S$:
+
+Pripadnost lahko dokazujemo na dva načina:
+\begin{itemize}
+\item analitično: ali velja $f(x_1,x_2,...,x_n) = \ol f(\ol x_1, \ol x_2,...,\ol x_n)$,
+\item tabelarično: ali velja $f(\vec{w}_i) \neq f(\vec{w}_{2^n-1-i})$.
+\end{itemize}
+
+Postopek:
+\begin{itemize}
+\item $1:$ (analitično)\\
+\begin{align*}
+\ol 1 & = 1\\
+0 & = 1 \quad \text{protislovje}
+\end{align*}
+Funkcija ne pripada razredu $S$. Vseeno nadaljujmo.
+
+\item $\vee:$ (analitično)\\
+\begin{align*}
+\ol f (\ol x_1, \ol x_2) & = f(x_1,x_2)\\
+\ol{\ol x_1 \vee \ol x_2} & = x_1 \vee x_2 \quad \text{(desno stran dopolnimo do PDNO)} \\
+x_1 x_2 & = x_1(x_2 \vee \ol x_2) \vee x_2 (x_1 \vee \ol x_1)\\
+x_1 x_2 & = x_1 x_2 \vee x_1 \ol x_2 \vee x_1 x_2 \vee \ol x_1 x_2\\
+x_1 x_2 & = \ol x_1 x_2 \vee x_1 \ol x_2 \vee x_1 x_2\\
+\vee^2(3) & \neq \vee^2(1,2,3) \qquad \rightarrow \vee \notin S
+\end{align*}
+
+\item $\rightarrow:$ (tabelarično)\\
+\begin{table}[ht]
+\centering
+\begin{tabular}{cc|c}
+$x_1$ & $x_2$ & $x_1 \rightarrow x_2$\\
+\hline
+0 & 0 & 1\\
+0 & 1 & 1\\
+\hline
+1 & 0 & 0\\
+1 & 1 & 1
+\end{tabular}
+\end{table}
+
+$f(w_0) = f(w_3)$ -- funkcija ne pripada $S$.
+\end{itemize}
+
+\item Razred $L:$\\
+Funkcija $f(x_1,x_2,\ldots,x_n)$ spada v razred linearnih funkcij, če jo lahko zapišemo kot
+$$
+f(x_1,x_2,\ldots,x_n) = a_0 \nabla a_1 x_1 \nabla a_2 x_2 \nabla \cdots \nabla a_n x_n.
+$$
+Pripadnost lahko preverjamo:
+\begin{itemize}
+\item analitično,
+\item z Veitchevim diagramom.
+\end{itemize}
+
+Analitično preverjanje:
+\begin{itemize}
+\item predpostavimo, da funkcija $f(x_1,x_2,\ldots,x_n)$ spada v razred linearnih funkcij,
+\item določimo koeficiente $a_0,a_1,\cdots,a_n$,
+\item preverimo, če se dobljena funkcija $a_0 \nabla a_1 x_1 \nabla a_2 x_2 \nabla \cdots \nabla a_n x_n$ ujema s podano funkcijo $f(x_1,x_2,\ldots,x_n)$.
+\end{itemize}
+
+Postopek:
+\begin{itemize}
+\item $\vee:$\\
+Predpostavimo, da je disjunkcija linearna funkcija, tedaj jo lahko zapišemo kot:
+\begin{align*}
+f(x_1,x_2)_L & = x_1 \vee x_2 = a_0 \nabla a_1 x_1 \nabla a_2 x_2\\
+\hspace{5mm}\\
+f(0,0)_L & = a_0 \nabla a_1 0 \nabla a_2 0 = a_0 = 0 \nabla 0 = 0 \quad (a_0 = 0)\\
+f(0,1)_L & = 0 \nabla a_1 0 \nabla a_2 1 = a_2 = 0 \nabla 1 = 1 \quad (a_2 = 1)\\
+f(1,0)_L & = 0 \nabla a_1 1 \nabla a_2 0 = a_1 = 1 \nabla 0 = 1 \quad (a_1 = 1)\\
+f(x_1,x_2)_L &= 0 \nabla 1 x_1 \nabla 1 x_2 = x_1 \nabla x_2
+\end{align*}
+Preverimo za vse preostale vhodne vektorje (v primeru protislovja postopek ustavimo):
+\begin{align*}
+f(1,1) &= 1 \vee 1 = 1 \\
+f(1,1)_L &= x_1 \nabla x_2 = 1 \nabla 1 = 0
+\end{align*}
+Protislovje. Funkcija ne pripada razredu.
+\end{itemize}
+
+Preverjanje z Veitchevim diagramom:
+\begin{itemize}
+\item Preklopna funkcija spada v razred $L$, če pri primerjavi pokritij velja popolna enakost ali popolna različnost vrednosti funkcije.
+\end{itemize}
+
+Postopek:
+\begin{itemize}
+\item $\vee:$\\
+Preverimo pokritja:
+\begin{figure}[!htb]
+	\centering
+	\includegraphics{veitch_OR.eps}
+	\label{f1}
+\end{figure}
+
+\begin{itemize}
+\item $\ol x_1 x_2 : \ol x_1 \ol x_2$ (popolnoma različna), \\
+\item $x_1 : \ol x_1$ (niti popolnoma različna niti popolnoma enaka).
+\end{itemize}
+Funkcija ne pripada razredu.
+\end{itemize}
+
+\item Razred $M$:
+Funkcija pripada $M$, če pri vseh vhodnih vektorjih velja, da je pri manjšem vektorju vrednost funkcije manjša ali enaka vrednosti pri večjem vektorju. Relacija \emph{je manjši} je definirana na sledeči način:
+\begin{itemize}
+\item Za vhodna vektorja $w_i$ in $w_j$ velja $w_i < w_j$, če za vsako mesto $k$ velja $w_{k,i} \leq w_{k,j}$. Primer: $(1,0,0,1,0,1,0,0) < (1,1,0,1,0,1,0,1)$.
+\end{itemize}
+Pri preverjanju pripadnosti je dovolj, da preverimo le sosedne vhodne vektorje. Vhodna vektorja sta sosedna, če se razlikujeta le na enem mestu. Primer: $(1,0,0,1,0)$ in $(1,0,1,1,0)$.
+
+Postopek:
+\begin{itemize}
+\item $\rightarrow:$\\
+\begin{table}[ht]
+\centering
+\begin{tabular}{cc|c}
+$x_1$ & $x_2$ & $x_1 \rightarrow x_2$\\
+\hline
+0 & 0 & 1\\
+0 & 1 & 1\\
+1 & 0 & 0\\
+1 & 1 & 1
+\end{tabular}
+\end{table}
+
+Preverjamo samo sosedne vektorje. Sosedni vhodni vektorji so $(w_0,w_1)$, $(w_0,w_2)$, $(w_1,w_3)$ in $(w_2,w_3)$. Hitro najdemo protislovje, in sicer $w_0 < w_2, f(w_0) > f(w_2)$. Funkcija torej ne pripada $M$.
+\end{itemize}
+\end{enumerate}
+\end{resitev}
+
+\begin{zgled}
+Analitično preveri ali preklopna funkcija $f(x_1,x_2,x_3,x_4)=\&^4(0,1,6,8,9,14)$ pripada razredu linearnih funkcij.\\
+\end{zgled}
+\begin{resitev}
+Postopek:
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{cccc|c|c}
+$x_1$ & $x_2$ & $x_3$ & $x_4$ & $f(x_1,x_2,x_3,x_4)$ & $f(x_1,x_2,x_3,x_4)_L$\\
+\hline
+0 & 0 & 0 & 0 & 1 & 1\\
+0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0 & 1 & 1\\
+0 & 0 & 1 & 1 & 1 & 0\\
+0 & 1 & 0 & 0 & 1 & 1\\
+0 & 1 & 0 & 1 & 1 & 0\\
+0 & 1 & 1 & 0 & 0 & 1\\
+0 & 1 & 1 & 1 & 0 & 0\\
+1 & 0 & 0 & 0 & 1 & 1\\
+1 & 0 & 0 & 1 & 0 & 0\\
+1 & 0 & 1 & 0 & 1 & 1\\
+1 & 0 & 1 & 1 & 1 & 0\\
+1 & 1 & 0 & 0 & 1 & 1\\
+1 & 1 & 0 & 1 & 1 & 0\\
+1 & 1 & 1 & 0 & 0 & 1\\
+1 & 1 & 1 & 1 & 0 & 0\\
+\end{tabular}
+\end{table}
+Predpostavimo, da dana funkcija pripada razredu linearnih funkcij, tedaj jo lahko zapišemo kot:
+\begin{align*}
+f(x_1,x_2,x_3,x_4)_L & = a_0 \nabla a_1 x_1 \nabla a_2 x_2 \nabla a_3 x_3 \nabla a_4 x_4\\
+\hspace{5mm}\\
+f(0,0,0,0)_L & = a_0 \nabla a_1 0 \nabla a_2 0 \nabla a_3 0 \nabla a_4 0 = 1 \quad (a_0 = 1)\\
+f(0,0,0,1)_L & = 1 \nabla a_1 0 \nabla a_2 0 \nabla a_3 0 \nabla a_4 1 = 1 \nabla a_4 = 0 \quad (a_4 = 1)\\
+f(0,0,1,0)_L & = 1 \nabla a_1 0 \nabla a_2 0 \nabla a_3 1 \nabla a_4 0 = 1 \nabla a_3 = 1 \quad (a_3 = 0)\\
+f(0,1,0,0)_L & = 1 \nabla a_1 0 \nabla a_2 1 \nabla a_3 0 \nabla a_4 0 = 1 \nabla a_2 = 1 \quad (a_2 = 0)\\
+f(1,0,0,0)_L & = 1 \nabla a_1 1 \nabla a_2 0 \nabla a_3 0 \nabla a_4 0 = 1 \nabla a_1 = 1 \quad (a_1 = 0)\\
+f(x_1,x_2, x_3, x_4)_L &= 1 \nabla 0 x_1 \nabla 0 x_2 \nabla 0 x_3 \nabla 1 x_4 = 1 \nabla x_4 = \ol x_4
+\end{align*}
+Preverimo za vse preostale vhodne vektorje (v primeru protislovja postopek ustavimo):
+\begin{align*}
+f(0,0,1,1) &= 1 \\
+f(0,0,1,1)_L &= 1 \nabla 1 = 0
+\end{align*}
+Protislovje. Funkcija ne pripada razredu.
+\end{resitev}

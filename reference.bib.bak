@@ -1,0 +1,10 @@
+% Encoding: windows-1250
+
+@Book{tocci:2010,
+  title     = {Digital Systems: Principles and Applications (11th Edition)},
+  publisher = {Pearson},
+  year      = {2010},
+  author    = {Ronald J. Tocci and? Neal Widmer and? Greg Moss},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

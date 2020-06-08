@@ -1,0 +1,278 @@
+\chapter{Priprava na 6. laboratorijske vaje}
+\section{Simetrične preklopne funkcije}
+
+\bigskip
+Funkcija je popolnoma simetrična, če lahko zamenjamo poljubni dve vhodni spremenljivki in se funkcijska vrednost ne spremeni. Naj ima funkcija $f$ izhodno vrednost 1 pri vsakem tistem vhodnem vektorju, pri katerem ima natanko $a$ vhodnih spremenljivk vrednost 1. Število $a$ tedaj imenujemo \textit{simetrijsko število} funkcije $f$. Če za funkcijo $f$ obstaja neprazna množica simetrijskih števil, je funkcija \textit{popolnoma simetrična}.
+
+\bigskip
+\begin{zgled} Zapiši PDNO funkcije $f_{\{0,2\}}(x_1,x_2,x_3)$.
+\end{zgled}
+\begin{resitev} 
+Pomagamo si s pravilnostno tabelo:
+
+\begin{tabular}{ccc|c}
+$x_1$ & $x_2$ & $x_3$ & $f_{\{0,2\}}(x_1,x_2,x_3)$ \\
+\hline
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0 \\
+1 & 0 & 1 & 1 \\
+1 & 1 & 0 & 1 \\
+1 & 1 & 1 & 0 \\
+\end{tabular}
+
+PDNO lahko preberemo neposredno iz tabele:
+$$f(x_1,x_2,x_3) = \vee^3(0,3,5,6).$$
+\end{resitev}
+
+\bigskip
+\begin{zgled} 
+Zapiši PDNO funkcije $f_{\{0,2\}}(x_1,\ol x_2,x_3)$.
+\end{zgled}
+\begin{resitev}
+Pomagamo si s pravilnostno tabelo:
+
+\begin{tabular}{ccc|ccc|c}
+$x_1$ & $x_2$ & $x_3$ & $x_1$ & $\ol x_2$ & $x_3$ & $f_{\{0,2\}}(x_1,\ol x_2,x_3)$ \\
+\hline
+0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 1 & 1 & 1 \\
+0 & 1 & 0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 0 \\
+1 & 0 & 0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 1 & 1 & 1 & 1 & 0 \\
+1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+1 & 1 & 1 & 1 & 0 & 1 & 1 \\
+\end{tabular}
+
+PDNO lahko preberemo neposredno iz tabele:
+$$f(x_1,x_2,x_3) = \vee^3(1,2,4,7).$$
+\end{resitev}
+
+
+\section{Quineova metoda minimizacije}
+Medtem, ko so Veitchevi diagrami zelo primerni za ročno minimizacijo funkcij z manjšim številom vhodnih spremenljivk (do vključno 5), je za večje število vhodnih spremenljivk zelo zaželena avtomatizacija iskanja minimalne oblike. Pri tem se zelo dobro obnese Quineova (tudi Quine–McCluskey) metoda, ki za minimizacijo uporablja tabelaričen postopek, ki ga je enostavno sprogramirati. Metoda temelji na iskanju potrebnih glavnih vsebovalnikov na podalgi podobnega postopka kot Veitcheva metoda, le da pri tem uporablja drugačna orodja.
+
+\subsection{Določanje MDNO}
+\begin{itemize}
+\item Preklopno funkcijo zapišemo v popolni disjunktivni normalni obliki (PDNO).
+\item Poiščemo vse sosednje minterme in njihove glavne vsebovalnike:
+\begin{enumerate}
+\item Narišemo tabelo z $n$ stolpci, pri čemer je $n$ število vhodnih spremenljivk. V prvega vpišemo vse minterme, ki določajo preklopno funkcijo.
+\item Izraze v stolpcu medsebojno primerjamo in ugotavljamo sosednost. Primerjamo vsakega z vsakim.
+\item Sosedna izraza prečrtamo in v naslednji stolpec vpišemo njun glavni vsebovalnik.
+\item Ponavljamo koraka 2 in 3, dokler ne gremo čez vse kombinacije. Pri tem upoštevamo tudi že prečrtane izraze.
+\item Če v predhodnem koraku nismo našli nobenega vsebovalnika ali pa smo prišli v zadnji stolpec zaključimo.
+\end{enumerate}
+\item Izpišemo samo potrebne glavne vsebovalnike:
+\begin{enumerate}
+\item Narišemo tabelo pokritij z vrsticami, ki predstavljajo glavne vsebovalnike (samo tiste, ki niso prečrtani) in stolpci, ki predstavljajo minterme.
+\item Za vsak glavni vsebovalnik označimo minterme, ki jih pokriva.
+\item Poiščemo najmanjšo množico glavnih vsebovalnikov, ki skupaj pokrijejo vse minterme.
+\end{enumerate}
+\end{itemize}
+
+\begin{zgled}
+\label{MDNO}
+Preklopno funkcijo
+$
+f = \vee^4(1,4,6,7,8,9,10,11,15)
+$
+zapiši v MDNO s Quineovo metodo minimizacije.
+\end{zgled}
+\begin{resitev}
+
+S pomočjo Quineove metode zgradimo sledečo tabelo:
+
+\begin{tabular}{cc|cc|cc|c}
+& 4 & & 3 & & 2 & 1 \\
+\hline
+(1) & \sout{$\ol x_1 \ol x_2 \ol x_3 x_4$} & (1,6) & $\ol x_2 \ol x_3 x_4$ & (5,8) & $x_1 \ol x_2$ \\
+(2) & \sout{$\ol x_1 x_2 \ol x_3 \ol x_4$} & (2,3) & $\ol x_1 x_2 \ol x_4$ & (6,7) & \\
+(3) & \sout{$\ol x_1 x_2 x_3 \ol x_4$} & (3,4) & $\ol x_1 x_2 x_3$ & & \\
+(4) & \sout{$\ol x_1 x_2 x_3 x_4$} & (4,9) & $x_2 x_3 x_4$ & & \\
+(5) & \sout{$x_1 \ol x_2 \ol x_3 \ol x_4$} & (5,6) & \sout{$x_1 \ol x_2 \ol x_3$} & & \\
+(6) & \sout{$x_1 \ol x_2 \ol x_3 x_4$} & (5,7) & \sout{$x_1 \ol x_2 \ol x_4$} & & \\
+(7) & \sout{$x_1 \ol x_2 x_3 \ol x_4$} & (6,8) & \sout{$x_1 \ol x_2 x_4$} & & \\
+(8) & \sout{$x_1 \ol x_2 x_3 x_4$} & (7,8) & \sout{$x_1 \ol x_2 x_3$} & & \\
+(9) & \sout{$x_1 x_2 x_3 x_4$} & (8,9) & $x_1 x_3 x_4$ & & &
+\end{tabular}
+
+\bigskip
+Zgradimo tabelo pokritij:
+
+
+\begin{tabular}{cc|ccccccccc}
+& & $m_1$ & $m_4$ & $m_6$ & $m_7$ & $m_8$ & $m_9$ & $m_{10}$ & $m_{11}$ & $m_{15}$ \\
+\hline
+$\checkmark$ & $\ol x_2 \ol x_3 x_4$ & $\checkmark$ & & & & & $\checkmark$ & & & \\
+\hline
+$\checkmark$ & $\ol x_1 x_2 \ol x_4$ & & $\checkmark$ & $\checkmark$ & & & & & & \\
+\hline
+& $\ol x_1 x_2 x_3$ & & & $\checkmark$ & $\checkmark$ & & & & & \\
+\hline
+$\checkmark$ & $x_2 x_3 x_4$ & & & & $\checkmark$ & & & & & $\checkmark$ \\
+\hline
+& $x_1 x_3 x_4$ & & & & & & & & $\checkmark$ & $\checkmark$ \\
+\hline
+$\checkmark$ & $x_1 \ol x_2$ & & & & & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & \\
+\hline
+\end{tabular}
+
+\bigskip
+Iz tabele določimo potrebne glavne vsebovalnike:
+\bigskip
+$f_{\text{MDNO}}(x_1,x_2,x_3,x_4) = x_1 \ol x_2 \vee x_2 x_3 x_4 \vee \ol x_1 x_2 \ol x_4 \vee \ol x_2 \ol x_3  x_4.$
+\end{resitev}
+
+\subsection{Določanje MKNO}
+Postopek je podoben kot pri Veitchevi minimizaciji:
+\begin{enumerate}
+\item funkcijo negiramo,
+\item s Quineovo metodo izračunamo MDNO negirane funkcije,
+\item rezultat negiramo in z DeMorganovim pravilom pretvorimo v MKNO.
+\end{enumerate}
+
+\begin{zgled}
+Preklopno funkcijo
+$
+f = \vee^4(1,4,6,7,8,9,10,11,15)
+$
+zapiši v MKNO s Quineovo metodo minimizacije.
+\end{zgled}
+
+\begin{resitev}
+Funkcijo najprej negiramo:
+$\ol f = \vee^4(0,2,3,5,12,13,14)$.
+
+\bigskip
+S Quineovo metodo zgradimo sledečo tabelo:
+
+\begin{tabular}{c|c|cc}
+& 4 & & 3 \\
+\hline
+(1) & \sout{$\ol x_1 \ol x_2 \ol x_3 \ol x_4$} & (1,2) & $\ol x_1 \ol x_2 \ol x_4$ \\
+(2) & \sout{$\ol x_1 \ol x_2 x_3 \ol x_4$} & (2,3) & $\ol x_1 \ol x_2 x_3$ \\
+(3) & \sout{$\ol x_1 \ol x_2 x_3 x_4$} & (4,6) & $x_2 \ol x_3 x_4$ \\
+(4) & \sout{$\ol x_1 x_2 \ol x_3 x_4$} & (5,6) & $x_1 x_2 \ol x_3$ \\
+(5) & \sout{$x_1 x_2 \ol x_3 \ol x_4$} & (5,7) & $x_1 x_2 \ol x_4$ \\
+(6) & \sout{$x_1 x_2 \ol x_3 x_4$} && \\
+(7) & \sout{$x_1 x_2 x_3 \ol x_4$} && \\
+\end{tabular}
+
+\bigskip
+Zgradimo tabelo pokritij:
+
+\begin{tabular}{cc|ccccccc}
+& & $m_0$ & $m_2$ & $m_3$ & $m_5$ & $m_{12}$ & $m_{13}$ & $m_{14}$ \\
+\hline
+$\checkmark$ & $\ol x_1 \ol x_2 \ol x_4$ & $\checkmark$ & $\checkmark$ & & & & &  \\
+\hline
+$\checkmark$ & $\ol x_1 \ol x_2 x_3$ & & $\checkmark$ & $\checkmark$ & & & &  \\
+\hline
+$\checkmark$ & $x_2 \ol x_3 x_4$ & & & & $\checkmark$ & & $\checkmark$ &  \\
+\hline
+& $x_1 x_2 \ol x_3$ & & & & & $\checkmark$ & $\checkmark$ & \\
+\hline
+$\checkmark$ & $x_1 x_2 \ol x_4$ & & & & & $\checkmark$ & & $\checkmark$ \\
+\hline
+\end{tabular}
+
+\bigskip
+Iz tabele določimo potrebne glavne vsebovalnike:
+
+$\ol f_{\text{MDNO}}(x_1,x_2,x_3,x_4) = \ol x_1 \ol x_2 \ol x_4 \vee \ol x_1 \ol x_2 x_3 \vee x_2 \ol x_3 x_4 \vee x_1 x_2 \ol x_4$
+
+\bigskip
+Funkcijo ponovno negiramo in jo preko DeMorganovega pravila pretvorimo v konjunktivno normalno obliko:
+\begin{align*}
+\ol{\ol f}_{\text{MDNO}}(x_1,x_2,x_3,x_4) &= f_{\text{MKNO}}(x_1,x_2,x_3,x_4) = \ol{\ol x_1 \ol x_2 \ol x_4 \vee \ol x_1 \ol x_2 x_3 \vee x_2 \ol x_3 x_4 \vee x_1 x_2 \ol x_4}  \\ &= (x_1 \vee x_2 \vee x_4)(x_1 \vee x_2 \vee \ol x_3)(\ol x_2 \vee x_3 \vee \ol x_4)(\ol x_1 \vee \ol x_2 \vee x_4)
+\end{align*}
+
+
+\end{resitev}
+
+%\section*{Laboratorijske vaje}
+%Z uporabo Quineove metode minimizacije zapišite funkcijo $f$ v MDNO in jo realizirajte (Logisim) s poljubnimi znanimi elementi.
+%\begin{enumerate}
+%\item[a)] $f_{\{0,1\}}(x_1,\ol x_2,x_3)$
+%
+%\begin{tabular}{ccc|c}
+%$x_1$ & $x_2$ & $x_3$ & $f_{\{0,1\}}(x_1,\ol x_2,x_3)$\\
+%\hline
+%0 & 0 & 0 & 1 \\
+%0 & 0 & 1 & 0 \\
+%0 & 1 & 0 & 1 \\
+%0 & 1 & 1 & 1 \\
+%1 & 0 & 0 & 0 \\
+%1 & 0 & 1 & 0 \\
+%1 & 1 & 0 & 1 \\
+%1 & 1 & 1 & 0 \\
+%\end{tabular}
+%
+%\begin{tabular}{ccc|ccc|c}
+%& 3 & & & 2 & & 1 \\
+%\hline
+%(1) & $\ol x_1 \ol x_2 \ol x_3$ & x & (1,2) & $\ol x_1 \ol x_3$ & &\\
+%(2) & $\ol x_1 x_2 \ol x_3$ & x & (2,3) & $\ol x_1 x_2$ & &\\
+%(3) & $\ol x_1 x_2 x_3$ & x & (2,4) & $x_2 \ol x_3$ & &\\
+%(4) & $x_1 x_2 \ol x_3$ & x & & & &
+%\end{tabular}
+%
+%\bigskip
+%\begin{tabular}{cc|cccc}
+%& & $m_0$ & $m_2$ & $m_3$ & $m_6$\\
+%\hline
+%$\checkmark$ & $\ol x_1 \ol x_3$ & $\checkmark$ & $\checkmark$ & & \\
+%\hline
+%$\checkmark$ & $\ol x_1 x_2$ & & $\checkmark$ & $\checkmark$ & \\
+%\hline
+%$\checkmark$ & $x_2 \ol x_3$ & & $\checkmark$ & & $\checkmark$ \\
+%\hline
+%\end{tabular}
+%
+%\bigskip
+%$f_{\text{MDNO}} = \ol x_1 \ol x_3 \vee \ol x_1 x_2 \vee x_2 \ol x_3$
+%
+%\item[b)] $f_{\{0,1\}}(\ol x_1,x_2,\ol x_3)$
+%
+%\begin{tabular}{ccc|c}
+%$x_1$ & $x_2$ & $x_3$ & $f_{\{0,1\}}(\ol x_1,x_2,\ol x_3)$\\
+%\hline
+%0 & 0 & 0 & 0 \\
+%0 & 0 & 1 & 1 \\
+%0 & 1 & 0 & 0 \\
+%0 & 1 & 1 & 0 \\
+%1 & 0 & 0 & 1 \\
+%1 & 0 & 1 & 1 \\
+%1 & 1 & 0 & 0 \\
+%1 & 1 & 1 & 1 \\
+%\end{tabular}
+%
+%\begin{tabular}{ccc|ccc|c}
+%& 3 & & & 2 & & 1 \\
+%\hline
+%(1) & $\ol x_1 \ol x_2 x_3$ & x & (1,3) & $\ol x_2 x_3$ & &\\
+%(2) & $x_1 \ol x_2 \ol x_3$ & x & (2,3) & $x_1 \ol x_2$ & &\\
+%(3) & $x_1 \ol x_2 x_3$ & x & (3,4) & $x_1 x_3$ & &\\
+%(4) & $x_1 x_2 x_3$ & x & & & &
+%\end{tabular}
+%
+%\bigskip
+%\begin{tabular}{cc|cccc}
+%& & $m_1$ & $m_4$ & $m_5$ & $m_7$\\
+%\hline
+%$\checkmark$ & $\ol x_2 x_3$ & $\checkmark$ & & $\checkmark$ &\\
+%\hline
+%$\checkmark$ & $x_1 \ol x_2$ & & $\checkmark$ & $\checkmark$ &\\
+%\hline
+%$\checkmark$ & $x_1 x_3$ & & & $\checkmark$ & $\checkmark$\\
+%\hline
+%\end{tabular}
+%
+%\bigskip
+%$f_{\text{MDNO}} = \ol x_2 x_3 \vee x_1 \ol x_2 \vee x_1 x_3$
+%
+%\end{enumerate}
