@@ -26,7 +26,8 @@ openright, % Each chapter will start on a recto page.
 \usepackage{lmodern}
 
 \usepackage{color}
-
+\usepackage{xcolor}
+\definecolor{chapter_col}{rgb}{0.851, 0, 0.161} % temnejsa
 
 %\DeclareRobustCommand{\hsout}[1]{\texorpdfstring{\sout{#1}}{#1}}
 
@@ -109,7 +110,21 @@ openright, % Each chapter will start on a recto page.
   \renewcommand{\chaptitlefont}{\sffamily \bfseries\LARGE}
 }
 
-\chapterstyle{hangnum}
+\makechapterstyle{colors}{%
+   \renewcommand*{\chapnumfont}{\chaptitlefont} % allow for 99 chapters!
+   \settowidth{\chapindent}{\chapnumfont 999}
+   \renewcommand*{\printchaptername}{}
+   \renewcommand*{\chapternamenum}{}
+   \renewcommand*{\chapnumfont}{\chaptitlefont}
+   \renewcommand*{\printchapternum}{%
+\noindent\llap{\makebox[\chapindent][l]{%
+           \chapnumfont \thechapter}}}
+         \renewcommand*{\afterchapternum}{}
+  \renewcommand{\chaptitlefont}{\sffamily \bfseries\LARGE\color{chapter_col}}
+}
+
+%\chapterstyle{hangnum}
+\chapterstyle{colors}
 
 
 \setsecheadstyle{\normalfont\large\bfseries}
@@ -213,25 +228,35 @@ pdfauthor={I am the Author} % author
 \title{Priprave na vaje za predmet Osnove digitalnih vezij}
 
 
+\newif\iffrontFRI
+\frontFRIfalse
+%\frontFRItrue
 
 \begin{document}
 
 \selectlanguage{slovene}
 
 \frontmatter
-
+\iffrontFRI
 \maketitle
 
 Naslovno stran (stran i) in stran z ISBN in CIP informacijo (stran ii) bo založba nadomestila z novo postavljeno stranjo!
-%\begin{abstract}
-%\lipsum[1-2]
-%\end{abstract}
 
 \clearpage
 
 ISBN stran
 
 \clearpage
+\else
+
+\include{naslovnica}
+
+\clearpage
+\ 
+\clearpage
+
+
+\fi
 
 \tableofcontents*
 

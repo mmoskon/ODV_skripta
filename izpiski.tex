@@ -1,0 +1,93 @@
+\documentclass[a4paper]{report}
+\usepackage[slovene]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{alltt}
+\usepackage[normalem]{ulem}
+\usepackage{color}
+
+
+\graphicspath{{img/}}
+
+
+\input{kvmacros.tex}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\vect}[1]{\textbf{#1}}
+
+\setlength{\parindent}{0in}
+\newcommand{\ol}{\overline}
+\newcommand{\sh}{\uparrow}
+\newcommand{\pc}{\downarrow}
+\newcommand{\imp}{\rightarrow}
+
+\newtheorem{zgled}{Zgled}
+
+\begin{document}
+
+\begin{equation}
+=m_0 f(\vec{w}_0) \vee m_1 f(\vec{w}_1) \vee ... \vee m_{2^n-1} f(\vec{w}_{2^n-1})
+\end{equation}
+
+\begin{equation}
+    f(x_1,x_2,x_4)=\vee_{i=0}^{7}m_i f(\vec{w}_i)
+\end{equation}
+\begin{equation}
+    f(x_1,x_2,x_4)=m_0 \cdot 1 \vee m_1 \cdot 0 \vee m_2 \cdot 0 \vee m_3 \cdot 0 \vee m_4 \cdot 1 \vee m_5 \cdot 1 \vee m_6 \cdot 1 \vee m_7 \cdot 1 
+\end{equation}
+\begin{equation}
+    f(x_1,x_2,x_4)=m_0 \vee m_4 \vee m_5  \vee m_6  \vee m_7
+\end{equation}
+\begin{equation}
+    f(x_1,x_2,x_4)=\vee^3(0,4,5,6,7)
+\end{equation}
+
+\section{PKNO}
+\begin{equation}
+=\left(M_{2^n-1} \vee f(\vec{w}_0)\right) \cdot \left(M_{2^n-2} \vee f(\vec{w}_1)\right) \cdot ... \cdot \left(M_0 \vee f(\vec{w}_{2^n-1})\right)
+\end{equation}
+\begin{equation}
+    f(x_1,x_2,x_3)=\&_{i=0}^{7}\left( M_{2^{n}-1-i} \vee f(\vec{w}_i)\right)
+\end{equation}
+\begin{align}
+    f(x_1,x_2,x_3)=\left( M_{7} \vee f(\vec{w}_0)\right) \cdot \left( M_{6} \vee f(\vec{w}_1)\right) \cdot
+    \left( M_{5} \vee f(\vec{w}_2)\right) \cdot
+    \left( M_{4} \vee f(\vec{w}_3)\right) \cdot\\
+    \left( M_{3} \vee f(\vec{w}_4)\right) \cdot
+    \left( M_{2} \vee f(\vec{w}_5)\right) \cdot
+    \left( M_{1} \vee f(\vec{w}_6)\right) \cdot
+    \left( M_{0} \vee f(\vec{w}_7)\right) 
+\end{align}
+\begin{align}
+    f(x_1,x_2,x_3)=\left( M_{7} \vee 1\right) \cdot \left( M_{6} \vee 0\right) \cdot
+    \left( M_{5} \vee 0\right) \cdot
+    \left( M_{4} \vee 0\right) \cdot\\
+    \left( M_{3} \vee 1\right) \cdot
+    \left( M_{2} \vee 1\right) \cdot
+    \left( M_{1} \vee 1\right) \cdot
+    \left( M_{0} \vee 1\right) 
+\end{align}
+\begin{align}
+    f(x_1,x_2,x_3)= M_{6} \vee M_5 \vee M_4 
+\end{align}
+\begin{align}
+    f(x_1,x_2,x_3)= \&^3(6,5,4)
+\end{align}
+
+\textit{Pretvorimo $\&^3(6,5,4)$ v PDNO}
+
+$M_7, M_3, M_2, M_1, M_0$
+
+$m_0, m_4, m_5, m_6, m_7$
+
+\begin{align*}
+\overline x_1 x_2 \overline x_3 x_4 \vee \overline x_1 x_2 x_3 x_4 \vee  x_1 \overline x_2 \overline x_3 x_4 \vee\\ x_1 \overline x_2  x_3 x_4 \vee x_1  x_2 \overline x_3 x_4 \vee x_1 x_2  x_3 x_4
+\end{align*}
+\end{document}
+
+
