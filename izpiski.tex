@@ -30,6 +30,15 @@
 
 \begin{document}
 
+$$
+\ol x_1 x_2 x_3 \vee x_1 x_2 x_3 = (\ol x_1 \vee x_1) x_2 x_3 = 1 x_2 x_3 = x_2 x_3
+$$
+
+$$
+x_1 \equiv x_2 = 1 \nabla x_1 \nabla x_2 = \ol{x_1 \nabla x_2}
+$$
+
+
 \begin{equation}
 =m_0 f(\vec{w}_0) \vee m_1 f(\vec{w}_1) \vee ... \vee m_{2^n-1} f(\vec{w}_{2^n-1})
 \end{equation}
@@ -44,8 +53,73 @@
     f(x_1,x_2,x_4)=m_0 \vee m_4 \vee m_5  \vee m_6  \vee m_7
 \end{equation}
 \begin{equation}
-    f(x_1,x_2,x_4)=\vee^3(0,4,5,6,7)
+    f(x_1,x_2,x_3,x_4)=\vee^4(0,2,3,4,6,7,15)
 \end{equation}
+
+$$
+x_1 \vee x_2 = \ol{\ol{x_1 \vee x_2}} = \ol{\ol x_1 \ol x_2}
+$$
+
+\begin{tabular}{c|ccccc}
+     &  T$_0$ &  T$_1$ &  S & L & M \\
+     \hline
+     $f_1$ & $\in$ & $\in$ & $\notin$ & $\in$ & $\notin$ \\
+     $f_2$ & $\notin$ & $\notin$ & $\in$ & $\in$ & $\in$ \\
+     ...\\
+     $f_k$ & $\notin$ & $\in$ & $\in$ & $\notin$ & $\in$ \\ 
+\end{tabular}
+
+$$
+f(\vec{w}_0) = 1
+$$
+
+$$
+f(\vec{w}_{2^n-1}) = 0
+$$
+
+$$
+x_1 x_2 x_3 x_4
+$$
+
+$$
+x_1 x_2 x_3 \ol x_4
+$$
+
+$$
+x_1 x_2 x_3
+$$
+
+$$
+x_1 x_2 \ol x_3
+$$
+
+
+$$
+x_1 x_2
+$$
+
+$$
+x_1 \ol x_2
+$$
+
+$$
+x_1
+$$
+
+$$
+\ol x_1
+$$
+
+$$
+f(x_1, x_2, x_3, x_4) = \vee^4(1,2,4,5,7,8,11,13,14)
+$$
+
+
+
+
+
+
+
 
 \section{PKNO}
 \begin{equation}
